@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -61,11 +61,83 @@ const products = [
 ];
 
 const statistics = [
-  { value: "10", label: "Provinsi" },
-  { value: "26", label: "Kota/Kabupaten" },
-  { value: "2,150", label: "Kelurahan" },
-  { value: "132", label: "Mitra" },
+  { value: 10, label: "Provinsi" },
+  { value: 26, label: "Kota/Kabupaten" },
+  { value: 2150, label: "Kelurahan" },
+  { value: 132, label: "Mitra" },
 ];
+
+function CountUp({
+  end,
+  duration = 2000,
+}: {
+  end: number;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const elementRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const element = elementRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let animationFrame = 0;
+    let startTime: number | null = null;
+
+    const animate = (timestamp: number) => {
+      if (startTime === null) startTime = timestamp;
+
+      const progress = Math.min(
+        (timestamp - startTime) / duration,
+        1
+      );
+
+      // Efek perlambatan menjelang angka akhir
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+      setCount(Math.floor(easedProgress * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isVisible, end, duration]);
+
+  return (
+    <p
+      ref={elementRef}
+      className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl"
+    >
+      {count.toLocaleString("en-US")}
+    </p>
+  );
+}
 
 export default function ProductShowcase() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -91,17 +163,17 @@ export default function ProductShowcase() {
       <div className="mx-auto max-w-7xl">
         {/* STATISTIK */}
         <div className="mx-auto mb-12 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-8">
-          {statistics.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 text-sm font-medium text-blue-600 sm:text-base">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+            {statistics.map((stat) => (
+                <div key={stat.label} className="text-center">
+                    <CountUp end={stat.value} duration={2000} />
+
+                    <p className="mt-1 text-sm font-medium text-blue-600 sm:text-base">
+                        {stat.label}
+                    </p>
+                </div>
+            ))}
         </div>
+
 
         {/* JUDUL */}
         <div className="mb-10 text-center">

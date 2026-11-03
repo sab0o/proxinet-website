@@ -3,7 +3,6 @@ import Link from "next/link";
 import ProductShowcase from "@/components/ProductShowcase";
 import PromoShowcase from "@/components/PromoShowcase";
 import CertificateShowcase from "@/components/CertificateShowcase";
-import CustomerShowcase from "@/components/CustomerShowcase";
 import NetworkPartnerShowcase from "@/components/NetworkPartnerShowcase";
 
 export default function HomePage() {
@@ -78,9 +77,8 @@ export default function HomePage() {
 
       {/* SERTIFIKAT */}
       <CertificateShowcase />
-      <CustomerShowcase />
+
       <NetworkPartnerShowcase />
-      
     </>
   );
 }
