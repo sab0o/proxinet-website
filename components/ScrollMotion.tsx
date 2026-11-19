@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const SECTION_SELECTOR = "main section, footer";
+const MOTION_ROOT_SELECTOR = "main section, main > div, footer";
 const GRID_SELECTOR = ".grid";
 
 export default function ScrollMotion() {
@@ -13,7 +13,7 @@ export default function ScrollMotion() {
 
     if (reduceMotion || !("IntersectionObserver" in window)) return;
 
-    const observedSections = new WeakSet<Element>();
+    const observedRoots = new WeakSet<Element>();
     const observedGrids = new WeakSet<Element>();
 
     const revealObserver = new IntersectionObserver(
@@ -47,26 +47,30 @@ export default function ScrollMotion() {
     );
 
     const preparePage = () => {
-      document.querySelectorAll(SECTION_SELECTOR).forEach((section) => {
-        // Hero memakai entrance animation khusus.
-        // Wrapper section yang berisi section lain dilewati agar tidak
-        // terjadi animasi bertumpuk pada bagian yang sama.
+      document.querySelectorAll(MOTION_ROOT_SELECTOR).forEach((root) => {
+        const isSection = root.tagName.toLowerCase() === "section";
+
+        // Hindari dekorasi dan wrapper halaman yang memiliki section sendiri.
         if (
-          section.querySelector(".hero-animate") ||
-          section.querySelector("section") ||
-          section.hasAttribute("data-motion-ignore")
+          root.hasAttribute("data-motion-ignore") ||
+          root.getAttribute("aria-hidden") === "true" ||
+          root.querySelector(".hero-animate") ||
+          root.querySelector("section")
         ) {
           return;
         }
 
-        if (!observedSections.has(section)) {
-          observedSections.add(section);
-          section.classList.add("motion-reveal");
-          revealObserver.observe(section);
+        // Section Hero menggunakan entrance animation khusus di globals.css.
+        if (isSection && root.querySelector(".hero-animate")) return;
+
+        if (!observedRoots.has(root)) {
+          observedRoots.add(root);
+          root.classList.add("motion-reveal");
+          revealObserver.observe(root);
         }
 
-        // Grid dengan 2–8 item diperlakukan sebagai kumpulan kartu/kolom.
-        section.querySelectorAll(GRID_SELECTOR).forEach((grid) => {
+        // Grid berisi 2–8 elemen diperlakukan sebagai kumpulan kartu/kolom.
+        root.querySelectorAll(GRID_SELECTOR).forEach((grid) => {
           if (
             grid.hasAttribute("data-motion-ignore") ||
             observedGrids.has(grid)
