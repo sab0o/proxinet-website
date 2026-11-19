@@ -3,11 +3,31 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, MessageSquare, RadioTower } from "lucide-react";
+import { ArrowUpRight, MessageSquare, Move, RadioTower, RotateCcw } from "lucide-react";
 
 type ProductTab = "home" | "business" | "mitra";
 
 const WHATSAPP_NUMBER = "628117041659";
+
+const BUSINESS_LABELS = [
+  { label: "Kampus", x: 3, y: 6 },
+  { label: "Perusahaan", x: 52, y: 6 },
+  { label: "Sekolah", x: 31, y: 30 },
+  { label: "Institusi", x: 57, y: 56 },
+  { label: "Kantor", x: 8, y: 66 },
+  { label: "Organisasi", x: 36, y: 81 },
+] as const;
+
+type BusinessLabelPosition = { x: number; y: number };
+
+type ActiveLabelDrag = {
+  label: string;
+  pointerId: number;
+  startPointerX: number;
+  startPointerY: number;
+  startX: number;
+  startY: number;
+};
 
 function whatsappLink(message: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -179,6 +199,136 @@ const operationalSupports = [
 
 export default function ProdukPage() {
   const [activeTab, setActiveTab] = useState<ProductTab>("home");
+  const [businessLabelPositions, setBusinessLabelPositions] = useState<
+    Record<string, BusinessLabelPosition>
+  >(() =>
+    Object.fromEntries(
+      BUSINESS_LABELS.map(({ label, x, y }) => [label, { x, y }])
+    )
+  );
+  const illustrationRef = useRef<HTMLDivElement>(null);
+  const activeLabelDragRef = useRef<ActiveLabelDrag | null>(null);
+
+  const handleLabelPointerDown = (
+    event: React.PointerEvent<HTMLButtonElement>,
+    label: string
+  ) => {
+    const container = illustrationRef.current;
+    if (!container || (event.pointerType === "mouse" && event.button !== 0)) {
+      return;
+    }
+
+    const position = businessLabelPositions[label];
+    if (!position) return;
+
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+
+    activeLabelDragRef.current = {
+      label,
+      pointerId: event.pointerId,
+      startPointerX: event.clientX,
+      startPointerY: event.clientY,
+      startX: position.x,
+      startY: position.y,
+    };
+  };
+
+  const handleLabelPointerMove = (
+    event: React.PointerEvent<HTMLButtonElement>
+  ) => {
+    const drag = activeLabelDragRef.current;
+    const container = illustrationRef.current;
+
+    if (!drag || drag.pointerId !== event.pointerId || !container) return;
+
+    const bounds = container.getBoundingClientRect();
+    const maxX = Math.max(
+      0,
+      ((bounds.width - event.currentTarget.offsetWidth) / bounds.width) * 100
+    );
+    const maxY = Math.max(
+      0,
+      ((bounds.height - event.currentTarget.offsetHeight) / bounds.height) *
+        100
+    );
+
+    const nextX = Math.min(
+      maxX,
+      Math.max(0, drag.startX + ((event.clientX - drag.startPointerX) / bounds.width) * 100)
+    );
+    const nextY = Math.min(
+      maxY,
+      Math.max(0, drag.startY + ((event.clientY - drag.startPointerY) / bounds.height) * 100)
+    );
+
+    setBusinessLabelPositions((current) => ({
+      ...current,
+      [drag.label]: { x: nextX, y: nextY },
+    }));
+  };
+
+  const handleLabelPointerEnd = (
+    event: React.PointerEvent<HTMLButtonElement>
+  ) => {
+    const drag = activeLabelDragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    activeLabelDragRef.current = null;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+
+  const handleLabelKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    label: string
+  ) => {
+    const movement: Record<string, { x: number; y: number }> = {
+      ArrowLeft: { x: -1, y: 0 },
+      ArrowRight: { x: 1, y: 0 },
+      ArrowUp: { x: 0, y: -1 },
+      ArrowDown: { x: 0, y: 1 },
+    };
+    const delta = movement[event.key];
+    const container = illustrationRef.current;
+    if (!delta || !container) return;
+
+    event.preventDefault();
+    const bounds = container.getBoundingClientRect();
+    const maxX = Math.max(
+      0,
+      ((bounds.width - event.currentTarget.offsetWidth) / bounds.width) * 100
+    );
+    const maxY = Math.max(
+      0,
+      ((bounds.height - event.currentTarget.offsetHeight) / bounds.height) *
+        100
+    );
+
+    setBusinessLabelPositions((current) => {
+      const position = current[label];
+      if (!position) return current;
+
+      return {
+        ...current,
+        [label]: {
+          x: Math.min(maxX, Math.max(0, position.x + delta.x * (event.shiftKey ? 5 : 1))),
+          y: Math.min(maxY, Math.max(0, position.y + delta.y * (event.shiftKey ? 5 : 1))),
+        },
+      };
+    });
+  };
+
+  const resetBusinessLabels = () => {
+    activeLabelDragRef.current = null;
+    setBusinessLabelPositions(
+      Object.fromEntries(
+        BUSINESS_LABELS.map(({ label, x, y }) => [label, { x, y }])
+      )
+    );
+  };
 
   return (
     <main className="min-h-screen overflow-hidden bg-white">
@@ -387,40 +537,73 @@ export default function ProdukPage() {
                   </div>
                 </div>
 
-                {/* ILLUSTRATION */}
-                <div className="relative mx-auto min-h-[220px] w-full max-w-[620px] px-1 py-2 sm:min-h-[240px] md:px-0">
-                  <div className="grid w-full grid-cols-2 gap-3 md:contents">
-                    {[
-                      { label: "Kampus", position: "md:left-[3%] md:top-[6%]" },
-                      { label: "Perusahaan", position: "md:left-[54%] md:top-[6%]" },
-                      { label: "Sekolah", position: "md:left-[30%] md:top-[28%]" },
-                      { label: "Institusi", position: "md:left-[64%] md:top-[53%]" },
-                      { label: "Kantor", position: "md:left-[9%] md:top-[64%]" },
-                      { label: "Organisasi", position: "md:left-[37%] md:top-[77%]" },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className={`min-w-0 rounded-lg border border-blue-400 bg-white px-3 py-2 text-center text-[13px] font-semibold text-slate-600 shadow-[0_1px_3px_rgba(37,99,235,0.08)] md:absolute md:min-w-[78px] ${item.position}`}
-                      >
-                        {item.label}
-                      </div>
-                    ))}
+                {/* INTERACTIVE ILLUSTRATION */}
+                <div className="mx-auto w-full max-w-[620px]">
+                  <div className="mb-1 flex items-center justify-between gap-3 text-[11px] text-slate-400">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Move size={13} strokeWidth={1.8} />
+                      Geser kotak untuk mengatur posisinya
+                    </span>
+                    <button
+                      type="button"
+                      onClick={resetBusinessLabels}
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 font-semibold text-blue-600 transition hover:bg-blue-50"
+                    >
+                      <RotateCcw size={12} />
+                      Atur ulang
+                    </button>
                   </div>
 
                   <div
-                    aria-hidden="true"
-                    className="relative mx-auto mt-3 flex h-[132px] w-[132px] items-center justify-center md:absolute md:right-[1%] md:top-1/2 md:mt-0 md:h-[156px] md:w-[156px] md:-translate-y-1/2"
+                    ref={illustrationRef}
+                    className="relative h-[280px] w-full select-none sm:h-[290px] md:h-[260px]"
                   >
-                    <div className="absolute inset-5 rounded-full bg-blue-100/50 blur-2xl" />
-                    <div className="relative z-10">
-                      <RadioTower
-                        className="size-[144px] text-slate-500 drop-shadow-[0_5px_4px_rgba(15,23,42,0.12)] md:size-[154px]"
-                        strokeWidth={1.45}
-                      />
-                      <RadioTower
-                        className="absolute inset-0 size-[144px] text-blue-500 md:size-[154px] [clip-path:inset(0_0_58%_0)]"
-                        strokeWidth={1.45}
-                      />
+                    {BUSINESS_LABELS.map(({ label }) => {
+                      const position = businessLabelPositions[label];
+                      if (!position) return null;
+
+                      return (
+                        <button
+                          key={label}
+                          type="button"
+                          aria-label={`Geser label ${label}. Gunakan tombol panah untuk memindahkan.`}
+                          title="Tarik untuk memindahkan"
+                          onPointerDown={(event) =>
+                            handleLabelPointerDown(event, label)
+                          }
+                          onPointerMove={handleLabelPointerMove}
+                          onPointerUp={handleLabelPointerEnd}
+                          onPointerCancel={handleLabelPointerEnd}
+                          onKeyDown={(event) =>
+                            handleLabelKeyDown(event, label)
+                          }
+                          style={{
+                            left: `${position.x}%`,
+                            top: `${position.y}%`,
+                            touchAction: "none",
+                          }}
+                          className="absolute z-10 min-w-[82px] cursor-grab rounded-lg border border-blue-400 bg-white px-3 py-2 text-center text-[13px] font-semibold text-slate-600 shadow-[0_1px_3px_rgba(37,99,235,0.08)] transition-[box-shadow,border-color] hover:border-blue-500 hover:shadow-md active:cursor-grabbing active:border-blue-600 active:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 items-center justify-center xl:flex"
+                    >
+                      <div className="absolute inset-4 rounded-full bg-blue-100/50 blur-2xl" />
+                      <div className="relative z-10">
+                        <RadioTower
+                          className="size-[142px] text-slate-500 drop-shadow-[0_5px_4px_rgba(15,23,42,0.12)]"
+                          strokeWidth={1.45}
+                        />
+                        <RadioTower
+                          className="absolute inset-0 size-[142px] text-blue-500 [clip-path:inset(0_0_58%_0)]"
+                          strokeWidth={1.45}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
