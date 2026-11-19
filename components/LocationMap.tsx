@@ -441,9 +441,9 @@ export default function LocationMap() {
                       </p>
                       <Link
                         href="/pusat-kontak"
-                        className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold !text-white shadow-sm transition hover:bg-blue-700 hover:!text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
                       >
-                        <MessageCircle aria-hidden="true" size={15} strokeWidth={2} />
+                        <MessageCircle aria-hidden="true" className="shrink-0 text-white" size={15} strokeWidth={2} />
                         Hubungi Customer Service
                       </Link>
                     </div>
