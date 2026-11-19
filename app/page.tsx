@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import ProductShowcase from "@/components/ProductShowcase";
 import PromoShowcase from "@/components/PromoShowcase";
 import CertificateShowcase from "@/components/CertificateShowcase";
@@ -55,7 +56,7 @@ export default function HomePage() {
                 className="hero-button inline-flex min-h-14 items-center gap-3 rounded-full bg-blue-600 px-7 py-4 font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 Temui Proxinet di Area Anda
-                <span aria-hidden="true">→</span>
+                <ArrowRight aria-hidden="true" size={16} strokeWidth={2.2} />
               </Link>
             </div>
 
