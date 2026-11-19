@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, MessageSquare, Move, RadioTower, RotateCcw } from "lucide-react";
+import { ArrowUpRight, Check, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Wrench } from "lucide-react";
 
 type ProductTab = "home" | "business" | "mitra";
 
@@ -178,19 +178,19 @@ const mitraBenefits = [
 
 const operationalSupports = [
   {
-    icon: "◉",
+    icon: Headset,
     title: "Call Center dan Network Operations Center (NOC)",
     description:
       "Pusat kendali dan pemantauan lalu lintas jaringan untuk mendeteksi serta mengantisipasi potensi anomali koneksi.",
   },
   {
-    icon: "⌁",
+    icon: Wrench,
     title: "Tim Teknisi Fiber Optik",
     description:
       "Tenaga ahli instalasi kabel serat optik, penyambungan splicing, serta pemeliharaan perangkat distribusi di lapangan.",
   },
   {
-    icon: "⌁",
+    icon: RadioTower,
     title: "Respons dan Penanganan Gangguan",
     description:
       "Ketentuan respons dan penanganan teknis dibahas bersama tim PROXINET sesuai kesepakatan layanan mitra.",
@@ -715,16 +715,27 @@ export default function ProdukPage() {
                 </div>
 
                 {/* MITRA BENEFITS */}
-                <div className="flex flex-col items-center justify-center gap-3 rounded-xl bg-gradient-to-br from-blue-50 to-slate-100 p-6">
-                  {mitraBenefits.map((benefit) => (
-                    <div
-                      key={benefit}
-                      className="w-full max-w-[280px] rounded-lg border border-blue-200 bg-white px-4 py-3 text-center text-xs font-semibold text-slate-700 shadow-sm"
-                    >
-                      {benefit}
-                    </div>
-                  ))}
-                  <div className="mt-2 text-4xl text-blue-500">⌁</div>
+                <div className="flex flex-col items-center justify-center gap-5 rounded-xl bg-gradient-to-br from-blue-50 to-slate-100 p-6 sm:flex-row sm:gap-4">
+                  <div className="flex w-full flex-1 flex-col items-center gap-3">
+                    {mitraBenefits.map((benefit) => (
+                      <div
+                        key={benefit}
+                        className="w-full max-w-[280px] rounded-lg border border-blue-200 bg-white px-4 py-3 text-center text-xs font-semibold text-slate-700 shadow-sm"
+                      >
+                        {benefit}
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    aria-hidden="true"
+                    className="relative flex size-28 shrink-0 items-center justify-center text-blue-500 sm:size-32"
+                  >
+                    <div className="absolute inset-3 rounded-full bg-blue-200/60 blur-2xl" />
+                    <RadioTower
+                      className="relative z-10 size-24 drop-shadow-[0_4px_4px_rgba(37,99,235,0.16)] sm:size-28"
+                      strokeWidth={1.55}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -760,8 +771,8 @@ export default function ProdukPage() {
                     className="rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-blue-300 hover:shadow-md"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-2xl font-bold text-blue-600">
-                        {support.icon}
+                      <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                        <support.icon size={24} strokeWidth={2} />
                       </div>
                       <h3 className="text-sm font-bold leading-5 text-slate-700">
                         {support.title}
@@ -791,8 +802,8 @@ export default function ProdukPage() {
               <div className="grid gap-4 md:grid-cols-[0.8fr_1.2fr]">
                 <article className="rounded-2xl border border-slate-200 bg-white p-5">
                   <div className="flex items-center gap-3">
-                    <div className="flex size-11 items-center justify-center rounded-xl bg-blue-50 text-xl text-blue-600">
-                      ▤
+                    <div className="flex size-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                      <Files size={24} strokeWidth={2} />
                     </div>
                     <h3 className="font-bold text-slate-700">
                       Administrasi
@@ -806,7 +817,7 @@ export default function ProdukPage() {
                       "Dokumen legalitas usaha (jika ada)",
                     ].map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="font-bold text-blue-600">✓</span>
+                        <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-blue-600" strokeWidth={2.2} />
                         {item}
                       </li>
                     ))}
@@ -815,8 +826,8 @@ export default function ProdukPage() {
 
                 <article className="rounded-2xl border border-slate-200 bg-white p-5">
                   <div className="flex items-center gap-3">
-                    <div className="flex size-11 items-center justify-center rounded-xl bg-blue-50 text-xl text-blue-600">
-                      ☷
+                    <div className="flex size-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                      <ListChecks size={24} strokeWidth={2} />
                     </div>
                     <h3 className="font-bold text-slate-700">
                       Syarat dan Ketentuan
@@ -831,7 +842,7 @@ export default function ProdukPage() {
                       "Ketentuan teknis dan operasional dibahas bersama tim PROXINET.",
                     ].map((item) => (
                       <li key={item} className="flex gap-2">
-                        <span className="font-bold text-blue-600">✓</span>
+                        <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-blue-600" strokeWidth={2.2} />
                         {item}
                       </li>
                     ))}
