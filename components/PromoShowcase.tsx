@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const promos = [
   {
@@ -95,9 +96,7 @@ export default function PromoShowcase() {
                         {promo.button}
                       </span>
 
-                      <span aria-hidden="true" className="text-white">
-                        →
-                      </span>
+                      <ArrowRight aria-hidden="true" className="size-4 text-white" strokeWidth={2.2} />
                     </Link>
                   </div>
                 </div>
@@ -112,18 +111,7 @@ export default function PromoShowcase() {
             onClick={() => goTo(activeIndex - 1)}
             className="absolute left-0 top-1/2 z-40 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-blue-600 shadow-lg transition hover:scale-105 hover:bg-blue-50 sm:left-2 sm:size-12"
           >
-            <svg
-              viewBox="0 0 24 24"
-              width="23"
-              height="23"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path d="m15 18-6-6 6-6" />
-              <path d="M9 12h12" />
-            </svg>
+            <ArrowLeft aria-hidden="true" size={23} strokeWidth={2} />
           </button>
 
           {/* PANAH KANAN */}
@@ -133,18 +121,7 @@ export default function PromoShowcase() {
             onClick={() => goTo(activeIndex + 1)}
             className="absolute right-0 top-1/2 z-40 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-blue-600 shadow-lg transition hover:scale-105 hover:bg-blue-50 sm:right-2 sm:size-12"
           >
-            <svg
-              viewBox="0 0 24 24"
-              width="23"
-              height="23"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              aria-hidden="true"
-            >
-              <path d="m9 18 6-6-6-6" />
-              <path d="M3 12h12" />
-            </svg>
+            <ArrowRight aria-hidden="true" size={23} strokeWidth={2} />
           </button>
         </div>
 
