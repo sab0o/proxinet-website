@@ -11,6 +11,7 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
+import { Search } from "lucide-react";
 
 type Location = {
   id: string;
@@ -366,17 +367,7 @@ export default function LocationMap() {
             {/* SEARCH BAR */}
             <div className="relative mx-auto mt-7 max-w-xl">
             <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm transition focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100">
-                <svg
-                viewBox="0 0 24 24"
-                className="size-5 shrink-0 text-slate-400"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                aria-hidden="true"
-                >
-                <circle cx="10.8" cy="10.8" r="7.2" />
-                <path d="m16 16 5 5" />
-                </svg>
+                <Search aria-hidden="true" className="size-5 shrink-0 text-slate-400" strokeWidth={1.8} />
 
                 <input
                 value={search}
