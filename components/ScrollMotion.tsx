@@ -62,8 +62,8 @@ export default function ScrollMotion() {
           playEntranceAnimation(
             entry.target,
             0,
-            containsStaggerGrid ? 0 : 22,
-            containsStaggerGrid ? 620 : 760
+            containsStaggerGrid ? 0 : 26,
+            containsStaggerGrid ? 900 : 1100
           );
 
           revealObserver.unobserve(entry.target);
@@ -87,9 +87,9 @@ export default function ScrollMotion() {
           items.forEach((item, index) => {
             playEntranceAnimation(
               item,
-              Math.min(index, 6) * 90,
-              18,
-              700
+              Math.min(index, 6) * 130,
+              20,
+              950
             );
           });
 
