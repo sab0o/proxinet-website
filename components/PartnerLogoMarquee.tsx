@@ -29,7 +29,7 @@ export default function PartnerLogoMarquee({
 
   return (
     <section
-      className={`overflow-hidden py-14 sm:py-16 lg:py-20 ${
+      className={`overflow-hidden py-8 sm:py-9 lg:py-10 ${
         isDark ? "bg-[#173B5C] text-white" : "bg-white text-slate-900"
       }`}
     >
