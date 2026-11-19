@@ -437,7 +437,7 @@ export default function LocationMap() {
                 ) : (
                     <div className="flex flex-col items-center gap-3 px-4 py-5 text-center">
                       <p className="text-sm leading-6 text-slate-500">
-                        Lokasi tidak ditemukan. Coba nama kota atau wilayah lain atau hubungi kami.
+                        Lokasi tidak ditemukan. Coba nama kota atau wilayah lain.
                       </p>
                       <Link
                         href="/pusat-kontak"
