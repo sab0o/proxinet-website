@@ -11,7 +11,7 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { MessageCircle, Search } from "lucide-react";
 
 type Location = {
   id: string;
@@ -435,9 +435,18 @@ export default function LocationMap() {
                     </button>
                     ))
                 ) : (
-                    <p className="px-3 py-4 text-center text-sm text-slate-500">
-                    Lokasi tidak ditemukan. Coba nama kota atau wilayah lain.
-                    </p>
+                    <div className="flex flex-col items-center gap-3 px-4 py-5 text-center">
+                      <p className="text-sm leading-6 text-slate-500">
+                        Lokasi tidak ditemukan. Coba nama kota atau wilayah lain atau hubungi kami.
+                      </p>
+                      <Link
+                        href="/pusat-kontak"
+                        className="inline-flex min-h-9 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                      >
+                        <MessageCircle aria-hidden="true" size={15} strokeWidth={2} />
+                        Hubungi Customer Service
+                      </Link>
+                    </div>
                 )}
                 </div>
             )}
