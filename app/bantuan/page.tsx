@@ -3,6 +3,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { ChevronDown, MessageCircle, Phone, Search } from "lucide-react";
 
 const steps = [
   {
@@ -287,17 +288,7 @@ export default function BantuanPage() {
 
           {/* KOLOM PENCARIAN */}
           <div className="relative mt-8">
-            <svg
-              className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              aria-hidden="true"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <path d="m16 16 4 4" />
-            </svg>
+            <Search aria-hidden="true" className="absolute left-4 top-1/2 size-4 -translate-y-1/2 text-slate-400" strokeWidth={1.8} />
 
             <input
               type="search"
@@ -378,16 +369,7 @@ export default function BantuanPage() {
                             : "text-slate-400"
                         }`}
                       >
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="size-4"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          aria-hidden="true"
-                        >
-                          <path d="m6 9 6 6 6-6" />
-                        </svg>
+                        <ChevronDown aria-hidden="true" className="size-4" strokeWidth={2} />
                       </span>
                     </button>
 
@@ -410,17 +392,7 @@ export default function BantuanPage() {
               /* KONDISI JIKA PERTANYAAN TIDAK DITEMUKAN */
               <div className="py-14 text-center">
                 <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-slate-100">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="size-5 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    aria-hidden="true"
-                  >
-                    <circle cx="11" cy="11" r="7" />
-                    <path d="m16 16 4 4" />
-                  </svg>
+                  <Search aria-hidden="true" className="size-5 text-slate-400" strokeWidth={1.8} />
                 </div>
 
                 <h3 className="mt-4 text-sm font-semibold text-slate-800">
@@ -470,18 +442,7 @@ export default function BantuanPage() {
                 className="inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full bg-[#315CF5] px-5 py-3 text-sm font-medium !text-white transition-all duration-300 hover:bg-[#244BD8] sm:w-auto"
             >
                 {/* ICON CHAT */}
-                <svg
-                viewBox="0 0 24 24"
-                className="size-6 shrink-0 text-white"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                >
-                <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z" />
-                </svg>
+                <MessageCircle aria-hidden="true" className="size-6 shrink-0 text-white" strokeWidth={1.8} />
 
                 <span>Hubungi Customer Service</span>
             </Link>
@@ -492,18 +453,7 @@ export default function BantuanPage() {
                 className="inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full border border-slate-300 bg-[#F1F3F6] px-5 py-3 text-sm font-medium text-slate-700 transition-all duration-300 hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600 sm:w-auto"
             >
                 {/* ICON TELEPON */}
-                <svg
-                viewBox="0 0 24 24"
-                className="size-6 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                >
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.68 2.8a2 2 0 0 1-.45 2.11L8.07 9.93a16 16 0 0 0 6 6l1.3-1.27a2 2 0 0 1 2.11-.45c.9.33 1.84.56 2.8.68a2 2 0 0 1 1.72 2.03Z" />
-                </svg>
+                <Phone aria-hidden="true" className="size-6 shrink-0" strokeWidth={1.8} />
 
                 <span>Lihat Pusat Kontak</span>
             </Link>
