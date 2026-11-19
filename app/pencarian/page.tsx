@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import { ArrowRight, Search } from "lucide-react";
 
 const searchIndex = [
   // BERANDA
@@ -230,7 +231,7 @@ export default async function SearchPage({
 
                   <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
                     Lihat informasi
-                    <span aria-hidden="true">→</span>
+                    <ArrowRight aria-hidden="true" size={16} strokeWidth={2.2} />
                   </span>
                 </Link>
               ))}
@@ -238,17 +239,7 @@ export default async function SearchPage({
           ) : (
             <div className="rounded-xl border border-slate-200 bg-white px-6 py-12 text-center">
               <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-slate-100">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-6 text-slate-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  aria-hidden="true"
-                >
-                  <circle cx="10.8" cy="10.8" r="7.2" />
-                  <path d="m16 16 5 5" />
-                </svg>
+                <Search aria-hidden="true" className="size-6 text-slate-400" strokeWidth={1.8} />
               </div>
 
               <h2 className="mt-4 font-bold text-slate-900">
