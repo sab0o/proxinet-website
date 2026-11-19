@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight, Check, ChevronRight, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Star, Wrench } from "lucide-react";
 
@@ -199,6 +199,28 @@ const operationalSupports = [
 
 export default function ProdukPage() {
   const [activeTab, setActiveTab] = useState<ProductTab>("home");
+
+  useEffect(() => {
+    const syncTabFromHash = () => {
+      const tabHash = window.location.hash;
+
+      if (tabHash === "#business") {
+        setActiveTab("business");
+      } else if (tabHash === "#mitra") {
+        setActiveTab("mitra");
+      } else if (!tabHash || tabHash === "#home") {
+        setActiveTab("home");
+      }
+    };
+
+    syncTabFromHash();
+    window.addEventListener("hashchange", syncTabFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncTabFromHash);
+    };
+  }, []);
+
   const [businessLabelPositions, setBusinessLabelPositions] = useState<
     Record<string, BusinessLabelPosition>
   >(() =>
