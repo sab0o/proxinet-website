@@ -4,17 +4,21 @@ import { useEffect } from "react";
 
 const MOTION_ROOT_SELECTOR = "main section, main > div, footer";
 const GRID_SELECTOR = ".grid";
-
 const MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-function playEntranceAnimation(element: Element, delay = 0) {
+function playEntranceAnimation(
+  element: Element,
+  delay = 0,
+  distance = 22,
+  duration = 760
+) {
   if (typeof element.animate !== "function") return;
 
   const animation = element.animate(
     [
       {
         opacity: 0,
-        transform: "translate3d(0, 22px, 0)",
+        transform: `translate3d(0, ${distance}px, 0)`,
       },
       {
         opacity: 1,
@@ -22,15 +26,14 @@ function playEntranceAnimation(element: Element, delay = 0) {
       },
     ],
     {
-      duration: 760,
+      duration,
       delay,
       easing: MOTION_EASING,
       fill: "both",
     }
   );
 
-  // Hapus efek animasi setelah selesai agar style hover/transform komponen
-  // tetap berjalan normal dan tidak tertahan oleh animation fill.
+  // Bersihkan animasi setelah selesai supaya hover/flip tetap berjalan normal.
   animation.onfinish = () => animation.cancel();
 }
 
@@ -50,7 +53,19 @@ export default function ScrollMotion() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          playEntranceAnimation(entry.target);
+          // Jika section memiliki grid kartu, section cukup fade;
+          // kartu-kartunya mendapat gerakan stagger tersendiri.
+          const containsStaggerGrid = Boolean(
+            entry.target.querySelector(".grid:not([data-motion-ignore])")
+          );
+
+          playEntranceAnimation(
+            entry.target,
+            0,
+            containsStaggerGrid ? 0 : 22,
+            containsStaggerGrid ? 620 : 760
+          );
+
           revealObserver.unobserve(entry.target);
         });
       },
@@ -70,7 +85,12 @@ export default function ScrollMotion() {
           );
 
           items.forEach((item, index) => {
-            playEntranceAnimation(item, Math.min(index, 6) * 90);
+            playEntranceAnimation(
+              item,
+              Math.min(index, 6) * 90,
+              18,
+              700
+            );
           });
 
           staggerObserver.unobserve(entry.target);
