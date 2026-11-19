@@ -5,6 +5,35 @@ import { useEffect } from "react";
 const MOTION_ROOT_SELECTOR = "main section, main > div, footer";
 const GRID_SELECTOR = ".grid";
 
+const MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+function playEntranceAnimation(element: Element, delay = 0) {
+  if (typeof element.animate !== "function") return;
+
+  const animation = element.animate(
+    [
+      {
+        opacity: 0,
+        transform: "translate3d(0, 22px, 0)",
+      },
+      {
+        opacity: 1,
+        transform: "translate3d(0, 0, 0)",
+      },
+    ],
+    {
+      duration: 760,
+      delay,
+      easing: MOTION_EASING,
+      fill: "both",
+    }
+  );
+
+  // Hapus efek animasi setelah selesai agar style hover/transform komponen
+  // tetap berjalan normal dan tidak tertahan oleh animation fill.
+  animation.onfinish = () => animation.cancel();
+}
+
 export default function ScrollMotion() {
   useEffect(() => {
     const reduceMotion = window.matchMedia(
@@ -21,7 +50,7 @@ export default function ScrollMotion() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.add("motion-visible");
+          playEntranceAnimation(entry.target);
           revealObserver.unobserve(entry.target);
         });
       },
@@ -36,7 +65,14 @@ export default function ScrollMotion() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.add("motion-stagger-visible");
+          const items = Array.from(entry.target.children).filter(
+            (child) => child instanceof HTMLElement
+          );
+
+          items.forEach((item, index) => {
+            playEntranceAnimation(item, Math.min(index, 6) * 90);
+          });
+
           staggerObserver.unobserve(entry.target);
         });
       },
@@ -60,7 +96,6 @@ export default function ScrollMotion() {
 
         if (!observedRoots.has(root)) {
           observedRoots.add(root);
-          root.classList.add("motion-reveal");
           revealObserver.observe(root);
         }
 
@@ -75,21 +110,11 @@ export default function ScrollMotion() {
 
           const children = Array.from(grid.children).filter(
             (child) => child instanceof HTMLElement
-          ) as HTMLElement[];
+          );
 
           if (children.length < 2 || children.length > 8) return;
 
           observedGrids.add(grid);
-          grid.classList.add("motion-stagger");
-
-          children.forEach((child, index) => {
-            child.classList.add("motion-stagger-item");
-            child.style.setProperty(
-              "--motion-stagger-delay",
-              `${Math.min(index, 6) * 90}ms`
-            );
-          });
-
           staggerObserver.observe(grid);
         });
       });
