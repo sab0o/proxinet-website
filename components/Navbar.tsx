@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Menu, Search, X } from "lucide-react";
 
 const navItems = [
   { label: "Beranda", href: "/" },
@@ -244,18 +245,7 @@ export default function Navbar() {
                 transparent ? "text-white" : "text-slate-800"
               }`}
             >
-              <svg
-                viewBox="0 0 24 24"
-                width="23"
-                height="23"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                aria-hidden="true"
-              >
-                <circle cx="10.8" cy="10.8" r="7.2" />
-                <path d="m16 16 5 5" />
-              </svg>
+              <Search aria-hidden="true" size={23} strokeWidth={1.7} />
             </div>
 
             {/* INPUT */}
@@ -297,17 +287,7 @@ export default function Navbar() {
                         className="group flex gap-3 rounded-xl px-3 py-3 transition-colors hover:bg-blue-50"
                       >
                         <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100">
-                          <svg
-                            viewBox="0 0 24 24"
-                            className="size-5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.7"
-                            aria-hidden="true"
-                          >
-                            <circle cx="10.8" cy="10.8" r="7.2" />
-                            <path d="m16 16 5 5" />
-                          </svg>
+                          <Search aria-hidden="true" className="size-5" strokeWidth={1.7} />
                         </div>
 
                         <div className="min-w-0 flex-1">
@@ -357,29 +337,9 @@ export default function Navbar() {
           }`}
         >
           {menuOpen ? (
-            <svg
-              width="25"
-              height="25"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              aria-hidden="true"
-            >
-              <path d="m18 6-12 12M6 6l12 12" />
-            </svg>
+            <X aria-hidden="true" size={25} strokeWidth={1.8} />
           ) : (
-            <svg
-              width="25"
-              height="25"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              aria-hidden="true"
-            >
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
+            <Menu aria-hidden="true" size={25} strokeWidth={1.8} />
           )}
         </button>
       </div>
