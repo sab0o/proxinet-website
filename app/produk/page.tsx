@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Check, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Wrench } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, ChevronRight, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Star, Wrench } from "lucide-react";
 
 type ProductTab = "home" | "business" | "mitra";
 
@@ -344,7 +344,7 @@ export default function ProdukPage() {
           <Link href="/" className="transition hover:text-blue-600">
             Beranda
           </Link>
-          <span aria-hidden="true">›</span>
+          <ChevronRight aria-hidden="true" className="size-4" strokeWidth={2} />
           <span className="font-medium text-blue-600">Produk</span>
         </div>
 
@@ -416,7 +416,7 @@ export default function ProdukPage() {
                         pkg.highlighted ? "bg-blue-600" : "bg-slate-900"
                       }`}
                     >
-                      ✦ {pkg.label}
+                      <Star aria-hidden="true" className="size-3.5 fill-current" /> {pkg.label}
                     </span>
                   </div>
 
@@ -474,8 +474,8 @@ export default function ProdukPage() {
                           key={feature}
                           className="flex items-start gap-2 text-xs leading-5 text-slate-600"
                         >
-                          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-green-100 text-[10px] font-bold text-green-600">
-                            ✓
+                          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-600">
+                            <Check aria-hidden="true" className="size-3" strokeWidth={2.5} />
                           </span>
                           {feature}
                         </li>
@@ -654,7 +654,7 @@ export default function ProdukPage() {
                           key={feature}
                           className="flex items-start gap-2 text-xs leading-5 text-slate-600"
                         >
-                          <span className="mt-0.5 text-blue-600">✓</span>
+                          <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-blue-600" strokeWidth={2.2} />
                           {feature}
                         </li>
                       ))}
@@ -670,7 +670,7 @@ export default function ProdukPage() {
                         className="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 transition hover:text-blue-600"
                       >
                         Tanya Kebutuhan
-                        <span className="text-blue-600">↗</span>
+                        <ArrowUpRight aria-hidden="true" className="size-3.5 text-blue-600" strokeWidth={2.2} />
                       </a>
                     </div>
                   </article>
