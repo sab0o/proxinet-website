@@ -3,6 +3,7 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Link from "next/link";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 const branches = [
   {
@@ -105,7 +106,7 @@ ${formData.message}
               Beranda
             </Link>
 
-            <span aria-hidden="true">›</span>
+            <ChevronRight aria-hidden="true" className="size-3" strokeWidth={2} />
 
             <span className="font-medium text-blue-600">
               Pusat Kontak
@@ -408,19 +409,7 @@ ${formData.message}
                 >
                   Kirim
 
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="size-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+                  <ArrowRight aria-hidden="true" className="size-4" strokeWidth={2} />
                 </button>
               </form>
             </div>
