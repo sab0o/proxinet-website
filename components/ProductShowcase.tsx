@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 
 const products = [
   {
@@ -246,7 +247,7 @@ export default function ProductShowcase() {
                       </p>
 
                       <p className="mt-4 text-xs text-white/70 md:hidden">
-                        Ketuk untuk melihat detail ↗
+                        Ketuk untuk melihat detail <ArrowUpRight aria-hidden="true" className="inline size-3.5" />
                       </p>
                     </div>
                   </button>
@@ -273,7 +274,7 @@ export default function ProductShowcase() {
                         className="inline-flex min-h-10 items-center gap-3 rounded-xl border border-white/60 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                       >
                         {product.action}
-                        <span aria-hidden="true">›</span>
+                        <ChevronRight aria-hidden="true" className="size-4" strokeWidth={2} />
                       </Link>
 
                       {!canHover && (
