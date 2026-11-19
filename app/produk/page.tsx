@@ -412,7 +412,7 @@ export default function ProdukPage() {
                   {/* BADGE */}
                   <div className="mb-4">
                     <span
-                      className={`inline-flex rounded-full px-3 py-1 text-[10px] font-bold text-white ${
+                      className={`inline-flex gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold text-white ${
                         pkg.highlighted ? "bg-blue-600" : "bg-slate-900"
                       }`}
                     >

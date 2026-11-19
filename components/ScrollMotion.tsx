@@ -107,7 +107,7 @@ export default function ScrollMotion() {
           const rootAnimation = prepareEntranceAnimation(
             root,
             0,
-            containsGrid ? 12 : 28,
+            containsGrid ? 0 : 28,
             800
           );
 
