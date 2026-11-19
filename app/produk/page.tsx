@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ArrowUpRight, MessageSquare, RadioTower } from "lucide-react";
 
 type ProductTab = "home" | "business" | "mitra";
 
@@ -36,7 +37,7 @@ function WhatsAppButton({
       className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 ${styles[variant]}`}
     >
       {children}
-      <span aria-hidden="true">↗</span>
+      <ArrowUpRight aria-hidden="true" size={16} strokeWidth={2.2} />
     </a>
   );
 }
@@ -359,10 +360,10 @@ export default function ProdukPage() {
           <section className="animate-in fade-in duration-300">
             {/* BUSINESS HERO */}
             <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-              <div className="grid items-center gap-7 md:grid-cols-[1.1fr_0.9fr]">
+              <div className="grid items-center gap-7 md:grid-cols-[0.82fr_1.18fr]">
                 <div>
 
-                  <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-950 sm:text-3xl">
+                  <h2 className="mt-3 text-2xl font-bold leading-tight text-slate-950 sm:text-[28px]">
                     Aktivitas Terus Berjalan.
                     <span className="block text-blue-600">
                       Koneksi Harus Bisa Diandalkan.
@@ -380,28 +381,47 @@ export default function ProdukPage() {
                     <WhatsAppButton
                       message="Halo PROXINET, saya ingin berkonsultasi mengenai kebutuhan layanan PROXINET Business & Education. Mohon informasi mengenai pilihan layanan dan penawaran yang sesuai dengan kebutuhan organisasi kami."
                     >
-                      <span aria-hidden="true">▢</span>
+                      <MessageSquare aria-hidden="true" size={17} strokeWidth={2} />
                       Konsultasikan Kebutuhan Anda
                     </WhatsAppButton>
                   </div>
                 </div>
 
                 {/* ILLUSTRATION */}
-                <div className="relative flex min-h-[190px] items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-slate-100 p-5">
-                  <div className="grid grid-cols-2 gap-3">
-                    {["Kampus", "Sekolah", "Perusahaan", "Kantor", "Institusi", "Organisasi"].map(
-                      (item) => (
-                        <div
-                          key={item}
-                          className="rounded-lg border border-blue-200 bg-white px-4 py-2 text-center text-xs font-semibold text-slate-600 shadow-sm"
-                        >
-                          {item}
-                        </div>
-                      )
-                    )}
+                <div className="relative mx-auto min-h-[220px] w-full max-w-[620px] px-1 py-2 sm:min-h-[240px] md:px-0">
+                  <div className="grid w-full grid-cols-2 gap-3 md:contents">
+                    {[
+                      { label: "Kampus", position: "md:left-[3%] md:top-[6%]" },
+                      { label: "Perusahaan", position: "md:left-[54%] md:top-[6%]" },
+                      { label: "Sekolah", position: "md:left-[30%] md:top-[28%]" },
+                      { label: "Institusi", position: "md:left-[64%] md:top-[53%]" },
+                      { label: "Kantor", position: "md:left-[9%] md:top-[64%]" },
+                      { label: "Organisasi", position: "md:left-[37%] md:top-[77%]" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className={`min-w-0 rounded-lg border border-blue-400 bg-white px-3 py-2 text-center text-[13px] font-semibold text-slate-600 shadow-[0_1px_3px_rgba(37,99,235,0.08)] md:absolute md:min-w-[78px] ${item.position}`}
+                      >
+                        {item.label}
+                      </div>
+                    ))}
                   </div>
-                  <div className="absolute -right-2 bottom-2 text-5xl text-blue-500/30">
-                    ))) 
+
+                  <div
+                    aria-hidden="true"
+                    className="relative mx-auto mt-3 flex h-[132px] w-[132px] items-center justify-center md:absolute md:right-[1%] md:top-1/2 md:mt-0 md:h-[156px] md:w-[156px] md:-translate-y-1/2"
+                  >
+                    <div className="absolute inset-5 rounded-full bg-blue-100/50 blur-2xl" />
+                    <div className="relative z-10">
+                      <RadioTower
+                        className="size-[144px] text-slate-500 drop-shadow-[0_5px_4px_rgba(15,23,42,0.12)] md:size-[154px]"
+                        strokeWidth={1.45}
+                      />
+                      <RadioTower
+                        className="absolute inset-0 size-[144px] text-blue-500 md:size-[154px] [clip-path:inset(0_0_58%_0)]"
+                        strokeWidth={1.45}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
