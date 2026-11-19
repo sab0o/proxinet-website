@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const MOTION_ROOT_SELECTOR = "main section, main > div, footer";
 const GRID_SELECTOR = ".grid";
-const MOTION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+const MOTION_EASING = "ease-out";
 
 function playEntranceAnimation(
   element: Element,
@@ -62,7 +62,7 @@ export default function ScrollMotion() {
           playEntranceAnimation(
             entry.target,
             0,
-            containsStaggerGrid ? 0 : 26,
+            containsStaggerGrid ? 0 : 28,
             containsStaggerGrid ? 900 : 1100
           );
 
@@ -88,8 +88,8 @@ export default function ScrollMotion() {
             playEntranceAnimation(
               item,
               Math.min(index, 6) * 130,
-              20,
-              950
+              22,
+              1000
             );
           });
 
