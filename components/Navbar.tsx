@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -116,6 +117,7 @@ const searchIndex = [
 
 export default function Navbar() {
   const pathname = usePathname();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchHovered, setSearchHovered] = useState(false);
@@ -148,6 +150,7 @@ export default function Navbar() {
     };
 
     handleScroll();
+
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
@@ -163,21 +166,6 @@ export default function Navbar() {
   }, [pathname]);
 
   const transparent = pathname === "/" && !scrolled;
-
-  const linkClass = (href: string) => {
-    const active =
-      href === "/"
-        ? pathname === "/"
-        : pathname.startsWith(href);
-
-    return `relative py-2 text-sm font-semibold transition-colors duration-300 ${
-      transparent
-        ? "text-white hover:text-blue-200"
-        : active
-          ? "text-blue-600"
-          : "text-slate-800 hover:text-blue-600"
-    }`;
-  };
 
   return (
     <header
@@ -282,9 +270,7 @@ export default function Navbar() {
                   ? "text-white placeholder:text-white/60"
                   : "text-slate-800 placeholder:text-slate-400"
               } ${
-                searchHovered
-                  ? "opacity-100"
-                  : "opacity-0"
+                searchHovered ? "opacity-100" : "opacity-0"
               }`}
             />
           </div>
@@ -347,6 +333,7 @@ export default function Navbar() {
                     <p className="text-sm font-semibold text-slate-700">
                       Informasi tidak ditemukan
                     </p>
+
                     <p className="mt-1 text-xs text-slate-400">
                       Coba gunakan kata kunci lainnya.
                     </p>

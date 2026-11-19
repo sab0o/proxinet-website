@@ -1,4 +1,5 @@
 
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -16,7 +17,7 @@
   --color-brand: var(--color-primary);
   --color-brand-hover: var(--color-primary-hover);
   --color-navy: var(--color-navy);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: "Plus Jakarta Sans", Arial, sans-serif;
 }
 
 * {
@@ -31,7 +32,7 @@ body {
   margin: 0;
   background: var(--color-white);
   color: var(--color-text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Plus Jakarta Sans", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -67,7 +68,6 @@ img {
   background: #DCE7FF;
   color: #172554;
 }
-
 
 /* Animasi logo berjalan */
 @keyframes logo-marquee-left {
@@ -106,3 +106,81 @@ img {
   }
 }
 
+@keyframes soft-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  70% {
+    transform: scale(1.10);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.10);
+    opacity: 0;
+  }
+}
+
+
+/* HERO ENTRANCE ANIMATION */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-button-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-animate {
+  opacity: 0;
+  animation: hero-fade-up 0.8s ease-out forwards;
+}
+
+.hero-tagline {
+  animation-delay: 0.2s;
+}
+
+.hero-heading {
+  animation-delay: 0.45s;
+}
+
+.hero-description {
+  animation-delay: 0.7s;
+}
+
+.hero-button {
+  opacity: 0;
+  animation: hero-button-enter 0.8s ease-out 0.95s forwards;
+}
+
+.hero-supporting-text {
+  animation-delay: 1.15s;
+}
+
+/* Hormati preferensi reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate,
+  .hero-button {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
