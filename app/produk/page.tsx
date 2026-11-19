@@ -384,7 +384,7 @@ export default function ProdukPage() {
             SECTION 1: PROXINET HOME
         ================================================= */}
         {activeTab === "home" && (
-          <section className="animate-in fade-in duration-300">
+          <section data-motion-ignore className="animate-in fade-in duration-300">
             <div className="mb-7">
               <p className="text-sm font-semibold text-blue-600">
                 INTERNET RUMAH
