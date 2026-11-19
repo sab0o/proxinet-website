@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Check, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Wrench } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, Files, Headset, ListChecks, MessageSquare, Move, RadioTower, RotateCcw, Wrench } from "lucide-react";
 
 type ProductTab = "home" | "business" | "mitra";
 
@@ -708,7 +708,7 @@ export default function ProdukPage() {
                     <WhatsAppButton
                       message="Halo PROXINET, saya tertarik untuk mendiskusikan peluang kerja sama kemitraan dengan PROXINET. Mohon informasi mengenai skema kemitraan, persyaratan, dan proses pengajuan kerja sama."
                     >
-                      <span aria-hidden="true">▢</span>
+                      <MessageSquare aria-hidden="true" size={17} strokeWidth={2} />
                       Diskusikan Peluang Kerja Sama
                     </WhatsAppButton>
                   </div>
@@ -747,7 +747,7 @@ export default function ProdukPage() {
                 className="inline-flex items-center gap-3 text-xs font-semibold text-slate-700 transition hover:text-blue-600"
               >
                 Lihat Keuntungan Menjadi Mitra
-                <span className="text-lg text-blue-600">↓</span>
+                <ArrowDown aria-hidden="true" className="size-4 text-blue-600" strokeWidth={2} />
               </a>
             </div>
 
