@@ -102,7 +102,7 @@ export default function ScrollMotion() {
           observedRoots.add(root);
 
           const containsGrid = Boolean(
-            root.querySelector(".grid")
+            root.querySelector(".grid:not([data-motion-ignore])")
           );
           const rootAnimation = prepareEntranceAnimation(
             root,
