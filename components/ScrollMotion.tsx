@@ -13,8 +13,8 @@ export default function ScrollMotion() {
 
     if (reduceMotion || !("IntersectionObserver" in window)) return;
 
-    const revealed = new WeakSet<Element>();
-    const observed = new WeakSet<Element>();
+    const observedSections = new WeakSet<Element>();
+    const observedGrids = new WeakSet<Element>();
 
     const revealObserver = new IntersectionObserver(
       (entries) => {
@@ -22,7 +22,6 @@ export default function ScrollMotion() {
           if (!entry.isIntersecting) return;
 
           entry.target.classList.add("motion-visible");
-          revealed.add(entry.target);
           revealObserver.unobserve(entry.target);
         });
       },
@@ -37,9 +36,8 @@ export default function ScrollMotion() {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
 
-          const group = entry.target;
-          group.classList.add("motion-stagger-visible");
-          staggerObserver.unobserve(group);
+          entry.target.classList.add("motion-stagger-visible");
+          staggerObserver.unobserve(entry.target);
         });
       },
       {
@@ -50,30 +48,39 @@ export default function ScrollMotion() {
 
     const preparePage = () => {
       document.querySelectorAll(SECTION_SELECTOR).forEach((section) => {
-        // Hero sudah memiliki entrance animation khusus.
+        // Hero memakai entrance animation khusus.
+        // Wrapper section yang berisi section lain dilewati agar tidak
+        // terjadi animasi bertumpuk pada bagian yang sama.
         if (
           section.querySelector(".hero-animate") ||
+          section.querySelector("section") ||
           section.hasAttribute("data-motion-ignore")
         ) {
           return;
         }
 
-        if (!observed.has(section) && !revealed.has(section)) {
-          observed.add(section);
+        if (!observedSections.has(section)) {
+          observedSections.add(section);
           section.classList.add("motion-reveal");
           revealObserver.observe(section);
         }
 
-        // Stagger hanya untuk grid berisi beberapa kartu/kolom.
+        // Grid dengan 2–8 item diperlakukan sebagai kumpulan kartu/kolom.
         section.querySelectorAll(GRID_SELECTOR).forEach((grid) => {
+          if (
+            grid.hasAttribute("data-motion-ignore") ||
+            observedGrids.has(grid)
+          ) {
+            return;
+          }
+
           const children = Array.from(grid.children).filter(
             (child) => child instanceof HTMLElement
           ) as HTMLElement[];
 
           if (children.length < 2 || children.length > 8) return;
-          if (grid.hasAttribute("data-motion-ignore")) return;
-          if (grid.classList.contains("motion-stagger")) return;
 
+          observedGrids.add(grid);
           grid.classList.add("motion-stagger");
 
           children.forEach((child, index) => {
@@ -84,20 +91,15 @@ export default function ScrollMotion() {
             );
           });
 
-          if (!observed.has(grid)) {
-            observed.add(grid);
-            staggerObserver.observe(grid);
-          }
+          staggerObserver.observe(grid);
         });
       });
     };
 
     preparePage();
 
-    // Menangani navigasi Next.js tanpa full page reload.
-    const mutationObserver = new MutationObserver(() => {
-      preparePage();
-    });
+    // Memindai konten baru saat berpindah halaman atau mengganti tab Next.js.
+    const mutationObserver = new MutationObserver(preparePage);
 
     mutationObserver.observe(document.body, {
       childList: true,
