@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
@@ -6,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsapp";
+import ScrollMotion from "@/components/ScrollMotion";
 
 export const metadata: Metadata = {
   title: "PROXINET | Connecting The World",
@@ -25,6 +25,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <FloatingWhatsApp />
+        <ScrollMotion />
       </body>
     </html>
   );
