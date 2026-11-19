@@ -48,9 +48,7 @@ export default function ScrollMotion() {
 
     const preparePage = () => {
       document.querySelectorAll(MOTION_ROOT_SELECTOR).forEach((root) => {
-        const isSection = root.tagName.toLowerCase() === "section";
-
-        // Hindari dekorasi dan wrapper halaman yang memiliki section sendiri.
+        // Hindari dekorasi, wrapper section, dan Hero yang sudah dianimasikan.
         if (
           root.hasAttribute("data-motion-ignore") ||
           root.getAttribute("aria-hidden") === "true" ||
@@ -59,9 +57,6 @@ export default function ScrollMotion() {
         ) {
           return;
         }
-
-        // Section Hero menggunakan entrance animation khusus di globals.css.
-        if (isSection && root.querySelector(".hero-animate")) return;
 
         if (!observedRoots.has(root)) {
           observedRoots.add(root);
