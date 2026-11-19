@@ -399,7 +399,7 @@ export default function ProdukPage() {
             </div>
 
             {/* PACKAGE CARDS */}
-            <div className="grid items-stretch gap-5 md:grid-cols-3">
+            <div data-motion-ignore className="grid items-stretch gap-5 md:grid-cols-3">
               {homePackages.map((pkg) => (
                 <article
                   key={pkg.name}
