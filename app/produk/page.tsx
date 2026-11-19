@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, MessageSquare, Move, RadioTower, RotateCcw } from "lucide-react";
 
