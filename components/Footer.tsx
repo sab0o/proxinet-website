@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const productLinks = [
   { label: "Proxinet Home", href: "/produk" },
-  { label: "Proxinet Mitra", href: "/produk/mitra" },
+  { label: "Proxinet Mitra", href: "/produk#mitra" },
   {
     label: "Proxinet Business & Education",
-    href: "/produk/business-education",
+    href: "/produk#business",
   },
 ];
 
