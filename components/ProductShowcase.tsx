@@ -20,8 +20,8 @@ const products = [
         bersama PROXINET!
       </>
     ),
-    action: "Beli Sekarang",
-    href: "/lokasi",
+    action: "Lihat Selengkapnya",
+    href: "/produk#home",
     price: "Mulai dari Rp 150.000/bulan",
   },
   {
@@ -38,8 +38,8 @@ const products = [
         instansi agar aktivitas digital berjalan lebih lancar!
       </>
     ),
-    action: "Konsultasi Sekarang",
-    href: "/pusat-kontak",
+    action: "Lihat Selengkapnya",
+    href: "/produk#business",
     price: "Hubungi Kami",
   },
   {
@@ -55,8 +55,8 @@ const products = [
         bersama PROXINET!
       </>
     ),
-    action: "Konsultasi Sekarang",
-    href: "/pusat-kontak",
+    action: "Lihat Selengkapnya",
+    href: "/produk#mitra",
     price: "Konsultasi Sekarang",
   },
 ];
