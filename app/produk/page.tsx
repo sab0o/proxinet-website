@@ -211,6 +211,7 @@ export default function ProdukPage() {
       } else if (!tabHash || tabHash === "#home") {
         setActiveTab("home");
       }
+      window.scrollTo(0, 0);
     };
 
     syncTabFromHash();
